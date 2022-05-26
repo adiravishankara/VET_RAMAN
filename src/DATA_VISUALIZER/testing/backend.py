@@ -23,13 +23,16 @@ class Backend:
 
     def load_file(self, filename):
         self.current_file = np.loadtxt(filename, delimiter=',', skiprows=self.skip_rows)
+        print(self.current_file.shape)
 
     def crop_dataset(self):
-        ind1 = np.where(self.current_file[0] < self.x_min)[-1]+1
-        ind2 = np.where(self.current_file[0] > self.x_max)[0] -1
+        ind1 = np.where(self.current_file[:, 0] < self.x_min)[0][-1] + 1
+        ind2 = np.where(self.current_file[:, 0] > self.x_max)[0][-1] - 1
 
-        self.x = self.current_file[ind1:ind2, 0]
-        self.y = self.current_file[ind1:ind2, 1]
+        print("ind1: {} \nind2: {}".format(self.current_file[ind1, 0], self.current_file[ind2, 0]))
+        self.x = np.array(self.current_file[ind1:ind2, 0])
+        self.y = np.array(self.current_file[ind1:ind2, 1])
+        print("Shape of New Array: {}".format(self.x.shape))
 
     def get_peaks(self):
         self.peaks, self.properties = find_peaks(self.y,
@@ -43,7 +46,8 @@ class Backend:
             self.peak_y.append(self.y[element])
         self.peak_x = np.array(self.peak_x)
         self.peak_y = np.array(self.peak_y)
-
+        self.num_peaks = self.peaks.size
+        print(self.num_peaks)
 
     def set_skiprows(self, val):
         self.skip_rows = val
@@ -89,4 +93,10 @@ class Backend:
         self.x_max = max
 
 
-
+if __name__ == '__main__':
+    A = Backend()
+    A.load_file("C:/Users/Adi_Ravishankara/PycharmProjects/Noodles/data/data/good/Acetaminophen-06.csv")
+    A.crop_dataset()
+    A.set_min_prominence(10)
+    A.set_min_distance(10)
+    A.get_peaks()
