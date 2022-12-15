@@ -16,25 +16,37 @@ app.layout = html.Div([
                  style={'padding-left': '20px'})],
         style={'display': 'inline-block'}),
     html.Div([
-        dcc.Loading(dcc.Graph(id='graph', ), type='circle'),
         html.Div([
-            dash_table.DataTable(id='data-table', style_table={'width': '300px', 'height': '400px', 'overflowY': 'scroll'}),
+        dcc.Loading(dcc.Graph(id='graph'), type='circle')], style={'width': '70%'}),
+        html.Div([
             html.Div([
-                html.Button(id='previous', n_clicks=0, children='Previous'),
-                html.Button(id='next', n_clicks=0, children='Next')
-            ], style={'display': 'inline-block'}),
-        html.Div([
-            dash_table.DataTable(id='data-table', style_table={'width': '300px', 'height': '300px', 'overflowY': 'scroll'}),
-            dcc.Slider(0, 50, 1, value=0, id='row-slider'),
-            html.Button(id='set-data', n_clicks=0, children='Set Data')
-        ], id='table', style={}),
-        ])
-    ])
+                html.H5('skip-rows'),
+                dcc.Slider(min=0, max=1000, step=10, value=500, id='skip-rows', marks=None, tooltip={'placement': 'left', 'always_visible': True})],) ,
+            dcc.Slider(min=0, max=1000, step=10, value=500, id='num-peaks', marks=None, tooltip={'placement': 'left', 'always_visible': True}),
+            dcc.Slider(min=0, max=1000, step=10, value=500, id='prominence', marks=None, tooltip={'placement': 'left', 'always_visible': True}),
+            dcc.Slider(min=0, max=1000, step=10, value=500, id='distance', marks=None, tooltip={'placement': 'left', 'always_visible': True}),
+            dcc.Slider(min=0, max=1000, step=10, value=500, id='height', marks=None, tooltip={'placement': 'left', 'always_visible': True}),
+            dcc.Slider(min=0, max=1000, step=10, value=500, id='threshold', marks=None, tooltip={'placement': 'left', 'always_visible': True}),
+        ], style={'width': '30%'})], style={}),
+
+    # html.Div([
+    #     dash_table.DataTable(id='data-table', style_table={'width': '300px', 'height': '400px', 'overflowY': 'scroll'}),
+    #     html.Div([
+    #         html.Button(id='previous', n_clicks=0, children='Previous'),
+    #         html.Button(id='next', n_clicks=0, children='Next')
+    #     ], style={'display': 'inline-block'}),
+    #     html.Div([
+    #         dash_table.DataTable(id='data-table', style_table={'width': '300px', 'height': '300px', 'overflowY': 'scroll'}),
+    #         dcc.Slider(0, 50, 1, value=0, id='row-slider'),
+    #         html.Button(id='set-data', n_clicks=0, children='Set Data')
+    #     ], id='table', style={}),
+    #     ])
+    # ])
 ])
 
-@app.callback(
-    Output('')
-)
+# @app.callback(
+#     Output('')
+# )
 
 
 if __name__ == '__main__':
